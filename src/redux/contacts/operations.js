@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../api/api";
+import api from "../../api/api";
 
+// Fetch all contacts
 export const fetchContacts = createAsyncThunk(
   "contacts/fetchAll",
   async (_, thunkAPI) => {
@@ -13,6 +14,7 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
+// Add a new contact
 export const addContact = createAsyncThunk(
   "contacts/addContact",
   async (contact, thunkAPI) => {
@@ -25,6 +27,7 @@ export const addContact = createAsyncThunk(
   }
 );
 
+// Delete a contact
 export const deleteContact = createAsyncThunk(
   "contacts/deleteContact",
   async (contactId, thunkAPI) => {
@@ -36,4 +39,3 @@ export const deleteContact = createAsyncThunk(
     }
   }
 );
-
