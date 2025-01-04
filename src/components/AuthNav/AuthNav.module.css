@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  gap: 20px;
+}
+
+.link {
+  text-decoration: none;
+  color: #2a2a2a;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.activeLink {
+  color: #ff4500;
+  font-weight: 700;
+  text-decoration: underline;
+}

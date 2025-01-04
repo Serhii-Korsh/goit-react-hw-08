@@ -1,68 +1,37 @@
-import { useSelector, useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/contacts/operations";
-import {
-  selectFilteredContacts,
-  selectLoading,
-} from "../../redux/contacts/selectors";
+import PropTypes from "prop-types";
+import styles from "./ContactList.module.css";
 import Contact from "../contact/Contact";
-import s from "./ContactList.module.css";
-import toast from "react-hot-toast";
 
-const ContactList = () => {
-  const contacts = useSelector(selectFilteredContacts);
-  const loading = useSelector(selectLoading);
-  const dispatch = useDispatch();
-
-  const handleDelete = (id) => {
-    dispatch(deleteContact(id))
-      .unwrap()
-      .then(() => toast.success("Contact deleted successfully!"))
-      .catch((error) => toast.error(`Error: ${error.message}`));
-  };
-
-  if (loading) return <p>Loading...</p>;
-  if (contacts.length === 0) return <p>No contacts found.</p>;
-
+const ContactList = ({ contacts, onDeleteContact }) => {
   return (
-    <ul className={s.ul}>
-      {contacts.map((contact) => (
-        <li key={contact.id}>
-          <Contact
-            name={contact.name}
-            number={contact.number}
-            onDelete={() => handleDelete(contact.id)}
-          />
-        </li>
-      ))}
+    <ul className={styles.contactList}>
+      {contacts
+        .filter(
+          (contact) => contact && contact.id && contact.name && contact.number
+        )
+        .map(({ id, name, number }) => (
+          <li key={id} className={styles.contactItem}>
+            <Contact
+              id={id}
+              name={name}
+              number={number}
+              onDelete={() => onDeleteContact(id)}
+            />
+          </li>
+        ))}
     </ul>
   );
 };
 
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onDeleteContact: PropTypes.func.isRequired,
+};
+
 export default ContactList;
-
-// import { useSelector, useDispatch } from "react-redux";
-// import { deleteContact } from "../../redux/contactsOps";
-// import { selectFilteredContacts } from "../../redux/contactsSlice";
-// import Contact from "../contact/Contact";
-// import s from "./ContactList.module.css";
-
-// const ContactList = () => {
-//   const contacts = useSelector(selectFilteredContacts);
-//   const dispatch = useDispatch();
-
-//   return (
-//     <ul className={s.ul}>
-//       {contacts.map((contact) => (
-//         <li key={contact.id}>
-//           <Contact
-//             name={contact.name}
-//             number={contact.number}
-//             onDelete={() => dispatch(deleteContact(contact.id))}
-//           />
-//         </li>
-//       ))}
-//     </ul>
-//   );
-// };
-
-// export default ContactList;
