@@ -18,4 +18,3 @@ Layout.propTypes = {
 };
 
 export default Layout;
-//proba
