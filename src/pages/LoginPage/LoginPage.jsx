@@ -9,6 +9,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleChange = ({ target: { name, value } }) => {
     if (name === "email") setEmail(value);
@@ -24,6 +25,7 @@ const LoginPage = () => {
       })
       .catch((error) => {
         console.error("Login failed:", error);
+        setError("Email or password entered incorrectly. Please try again.");
       });
     setEmail("");
     setPassword("");
@@ -59,6 +61,7 @@ const LoginPage = () => {
           Log In
         </button>
       </form>
+      {error && <p className={styles.error}>{error}</p>}{" "}
     </div>
   );
 };

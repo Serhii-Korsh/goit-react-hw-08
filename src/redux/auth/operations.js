@@ -22,6 +22,7 @@ export const signUp = createAsyncThunk(
           },
         }
       );
+      localStorage.setItem("token", data.token);
       setAuthHeader(data.token);
       return data;
     } catch (error) {
@@ -43,7 +44,7 @@ export const logIn = createAsyncThunk(
           },
         }
       );
-
+      localStorage.setItem("token", data.token);
       setAuthHeader(data.token);
       return data;
     } catch (error) {
@@ -58,6 +59,7 @@ export const logOut = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       await api.post("/users/logout");
+      localStorage.removeItem("token");
       clearAuthHeader();
     } catch (error) {
       return rejectWithValue(error.response?.data || "Logout failed");
@@ -67,8 +69,8 @@ export const logOut = createAsyncThunk(
 
 export const fetchCurrentUser = createAsyncThunk(
   "auth/refresh",
-  async (_, { getState, rejectWithValue }) => {
-    const { token } = getState().auth;
+  async (_, { rejectWithValue }) => {
+    const token = localStorage.getItem("token");
 
     if (!token) {
       return rejectWithValue("No token available");
@@ -80,6 +82,7 @@ export const fetchCurrentUser = createAsyncThunk(
       const { data } = await api.get("/users/current");
       return data;
     } catch (error) {
+      localStorage.removeItem("token");
       return rejectWithValue(error.response?.data || "Fetch user failed");
     }
   }
