@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCurrentUser } from "../redux/auth/operations";
 import { selectIsRefreshing } from "../redux/auth/selectors";
 import { Routes, Route } from "react-router-dom";
-import Layout from "./Layout/Layout.jsx";
+import Layout from "./Layout/Layout.jsx"; //proba
 import HomePage from "../pages/HomePage/HomePage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
